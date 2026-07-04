@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://zgy518.github.io/chop/sitemap.xml
