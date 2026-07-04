@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { LicenseInput } from "./LicenseInput";
 
 interface PaywallProps {
@@ -11,6 +11,11 @@ interface PaywallProps {
 
 export function Paywall({ isOpen, onClose, remaining }: PaywallProps) {
   const [showLicenseInput, setShowLicenseInput] = useState(false);
+  const [origin, setOrigin] = useState("");
+
+  useEffect(() => {
+    setOrigin(window.location.origin);
+  }, []);
 
   if (!isOpen) return null;
 
@@ -71,19 +76,16 @@ export function Paywall({ isOpen, onClose, remaining }: PaywallProps) {
             </li>
           </ul>
 
-          {/* Purchase via email */}
-          <div className="mt-5 rounded-lg bg-white border border-zinc-200 p-4 text-left">
-            <p className="text-sm font-medium text-zinc-700 mb-2">
-              To purchase, send an email to:
-            </p>
+          {/* PayPal payment button */}
+          <div className="mt-5">
             <a
-              href="mailto:18800492787@163.com?subject=Chop%20License%20Purchase"
-              className="block text-sm font-mono text-indigo-600 hover:text-indigo-700 break-all"
+              href={`https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=18800492787@163.com&item_name=Chop+Lifetime+License&amount=14.99&currency_code=USD&return=${encodeURIComponent(origin + "/thank-you")}&cancel_return=${encodeURIComponent(origin + "/")}`}
+              className="block w-full rounded-lg bg-[#0070ba] hover:bg-[#003087] text-white font-semibold text-sm py-3 text-center transition-colors"
             >
-              18800492787@163.com
+              Pay $14.99 with PayPal
             </a>
-            <p className="mt-2 text-xs text-zinc-500">
-              You&apos;ll receive a license key within 24 hours after payment via PayPal.
+            <p className="mt-2 text-xs text-center text-zinc-400">
+              Secure payment · License key delivered instantly
             </p>
           </div>
         </div>
